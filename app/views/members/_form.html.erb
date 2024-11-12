@@ -11,32 +11,34 @@
     </div>
   <% end %>
 
-  <div>
+  <div class="mb-3">
     <%= form.label :name, style: "display: block" %>
     <%= form.text_field :name %>
   </div>
+  <div class="mb-3">
+      <%= form.radio_button("gender", "male") %>
+      <%= form.label :male %>
+      <%= form.radio_button("gender", "female") %>
+      <%= form.label :female  %>
 
-  <div>
-    <%= form.label :gender, style: "display: block" %>
-    <%= form.text_field :gender %>
   </div>
 
-  <div>
+  <div class="mb-3">
     <%= form.label :birth_date, style: "display: block" %>
     <%= form.datetime_field :birth_date %>
   </div>
 
-  <div>
+  <div class="mb-3">
     <%= form.label :death_date, style: "display: block" %>
     <%= form.datetime_field :death_date %>
   </div>
 
-  <div>
+  <div class="mb-3">
     <%= form.label :family_id, style: "display: block" %>
-    <%= form.text_field :family_id %>
+    <%= form.select :family_id, Family.all.map {|r| [r.name, r.id]}  %>
   </div>
 
-  <div>
+  <div class="mb-3">
     <%= form.submit %>
   </div>
 <% end %>
