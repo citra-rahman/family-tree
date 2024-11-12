@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: King Arthur
+  gender: male
+  birth_date: 1930-01-12 22:03:01
+  death_date: 2000-11-12 22:03:01
+  family: one
+
+two:
+  name: Queen Margareth
+  gender: female
+  birth_date: 1932-11-12 22:03:01
+  death_date: 2001-01-05 22:03:01
+  family: two

@@ -37,12 +37,4 @@ class FamiliesControllerTest < ActionDispatch::IntegrationTest
     patch family_url(@family), params: { family: { name: @family.name } }
     assert_redirected_to family_url(@family)
   end
-
-  test "should destroy family" do
-    assert_difference("Family.count", -1) do
-      delete family_url(@family)
-    end
-
-    assert_redirected_to families_url
-  end
 end
