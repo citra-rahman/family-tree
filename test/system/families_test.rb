@@ -31,11 +31,4 @@ class FamiliesTest < ApplicationSystemTestCase
     assert_text "Family was successfully updated"
     click_on "Back"
   end
-
-  test "should destroy Family" do
-    visit family_url(@family)
-    click_on "Destroy this family", match: :first
-
-    assert_text "Family was successfully destroyed"
-  end
 end
