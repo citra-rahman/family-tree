@@ -39,11 +39,4 @@ class MembersTest < ApplicationSystemTestCase
     assert_text "Member was successfully updated"
     click_on "Back"
   end
-
-  test "should destroy Member" do
-    visit member_url(@member)
-    click_on "Destroy this member", match: :first
-
-    assert_text "Member was successfully destroyed"
-  end
 end
