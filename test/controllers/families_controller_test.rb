@@ -38,11 +38,9 @@ class FamiliesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to family_url(@family)
   end
 
-  test "should destroy family" do
-    assert_difference("Family.count", -1) do
-      delete family_url(@family)
+  test "should not destroy family with member" do
+    assert_difference("Family.count", 0) do
+      delete member_url(@family)
     end
-
-    assert_redirected_to families_url
   end
 end

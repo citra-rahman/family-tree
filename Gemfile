@@ -51,6 +51,9 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # Pry for debugging [https://github.com/pry/pry]
+  gem "pry", "~> 0.14.1"
 end
 
 group :development do
