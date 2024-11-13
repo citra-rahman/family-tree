@@ -1,11 +1,12 @@
 class Member < ApplicationRecord
   belongs_to :family
 
-  enum :gender, [ :male, :female ]
+  enum :gender, male: "male", female: "female"
 
   validate :death_time_validation
 
   def death_time_validation
-    errors.add(:base, "Birth date can't greater than death date") if birth_date > death_date
+    message = "Birth date can't be greater than death date!"
+    errors.add(:base, message) if death_date && (birth_date > death_date)
   end
 end

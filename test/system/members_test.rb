@@ -16,8 +16,8 @@ class MembersTest < ApplicationSystemTestCase
 
     fill_in "Birth date", with: @member.birth_date
     fill_in "Death date", with: @member.death_date
-    fill_in "Family", with: @member.family_id
-    fill_in "Gender", with: @member.gender
+    find_field("Family").set(@member.family.id)
+    find_field("member[gender]", match: :first).set(true)
     fill_in "Name", with: @member.name
     click_on "Create Member"
 
@@ -31,8 +31,8 @@ class MembersTest < ApplicationSystemTestCase
 
     fill_in "Birth date", with: @member.birth_date.to_s
     fill_in "Death date", with: @member.death_date.to_s
-    fill_in "Family", with: @member.family_id
-    fill_in "Gender", with: @member.gender
+    find_field("Family").set(@member.family.id)
+    find_field("member[gender]", match: :first).set(true)
     fill_in "Name", with: @member.name
     click_on "Update Member"
 

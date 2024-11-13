@@ -21,9 +21,9 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_12_190301) do
   end
 
   create_table "members", force: :cascade do |t|
-    t.string "name"
-    t.string "gender"
-    t.datetime "birth_date"
+    t.string "name", null: false
+    t.string "gender", null: false
+    t.datetime "birth_date", null: false
     t.datetime "death_date"
     t.bigint "family_id", null: false
     t.datetime "created_at", null: false

@@ -16,9 +16,9 @@
     <%= form.text_field :name %>
   </div>
   <div class="mb-3">
-      <%= form.radio_button("gender", "male") %>
+      <%= form.radio_button :gender, "male" %>
       <%= form.label :male %>
-      <%= form.radio_button("gender", "female") %>
+      <%= form.radio_button :gender, "female" %>
       <%= form.label :female  %>
 
   </div>
