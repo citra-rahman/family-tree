@@ -11,7 +11,7 @@ class Relationship < ApplicationRecord
     uncle: "uncle",
     spouse: "spouse",
     sibling: "sibling",
-    inLaw: "in-law",
+    inLaw: "in law",
     child: "child",
     cousin: "cousin",
     niece: "niece",
@@ -24,7 +24,7 @@ class Relationship < ApplicationRecord
 
    def define_depth
     self.depth = -1 if [ "parent", "uncle", "aunt" ].include? types
-    self.depth = 0 if [ "spouse", "sibling", "in-law", "cousin" ].include? types
+    self.depth = 0 if [ "spouse", "sibling", "in law", "cousin" ].include? types
     self.depth = 1 if [ "child", "niece", "nephew" ].include? types
    end
 end
