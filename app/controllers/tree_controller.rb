@@ -2,13 +2,15 @@
 
 class TreeController < ApplicationController
   before_action :set_family_tree
+
   def set_family_tree
-    family = Family.last
+    family = Family.find(params[:id])
     ancestor = family.ancestor
     @family_tree = [ build_family_tree(ancestor) ] if ancestor.presence
   end
 
-  def index
+  def show
+    @id = params[:id]
     render
   end
 
