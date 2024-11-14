@@ -28,7 +28,13 @@ class TreesController < ApplicationController
   end
 
   def marriages(member)
-    spouses = member.spouses
+    spouses = case member.gender
+    when "male"
+      member.spouses
+    when "female"
+      Member.spouse_of(member.id).filter { |e| e[:id] != member.id }
+    end
+
     return [] unless spouses.presence
 
     spouse = {}
@@ -37,13 +43,20 @@ class TreesController < ApplicationController
       spouse: spouse,
       children: children
     ]
-    children = spouses.first.children
+    children = case member.gender
+    when "male"
+      spouses.first.children
+    when "female"
+      member.children
+    end
+
     if spouses.presence
       result[0][:spouse] = {
         name: spouses.first.name,
         class: gender_to_class(spouses.first.gender)
       }
     end
+
     if children.presence
       result[0][:children] = children.map do |child|
         build_family_tree(child)

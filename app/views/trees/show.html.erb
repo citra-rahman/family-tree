@@ -6,14 +6,14 @@
 
 <script>
   var data = <%= @family_tree.to_json.html_safe %>
-
+  console.log(data)
   dTree.init(data, {
     target: "#family-tree",
     debug: false,
-    height: 250,
+    height: 500,
     width: 1200,
     margin: {
-        top: 100,
+        top: 50,
         right: 0,
         bottom: 0,
         left: 0

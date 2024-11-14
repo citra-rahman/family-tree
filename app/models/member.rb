@@ -16,6 +16,12 @@ class Member < ApplicationRecord
            source: :member1
 
 
+    scope :spouse_of, ->(member_id) {
+    joins("INNER JOIN relationships ON members.id = relationships.member2_id OR members.id = relationships.member1_id")
+      .where("relationships.types = ?", Relationship.types[:spouse])
+      .where("relationships.member1_id = ? OR relationships.member2_id = ?", member_id, member_id)
+  }
+
   validate :death_time_validation
 
   def death_time_validation
