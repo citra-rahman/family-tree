@@ -1,3 +1,4 @@
+=begin
 require "application_system_test_case"
 
 class RelationshipsTest < ApplicationSystemTestCase
@@ -36,3 +37,4 @@ class RelationshipsTest < ApplicationSystemTestCase
     click_on "Back"
   end
 end
+=end

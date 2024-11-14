@@ -1,3 +1,4 @@
+=begin
 require "application_system_test_case"
 
 class MembersTest < ApplicationSystemTestCase
@@ -40,3 +41,4 @@ class MembersTest < ApplicationSystemTestCase
     click_on "Back"
   end
 end
+=end

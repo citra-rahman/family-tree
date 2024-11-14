@@ -17,7 +17,7 @@ class RelationshipsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create relationship" do
     assert_difference("Relationship.count") do
-      post relationships_url, params: { relationship: { depth: @relationship.depth, member1_id: @relationship.member1_id, member2_id: @relationship.member2_id, types: @relationship.types } }
+      post relationships_url, params: { relationship: { depth: @relationship.depth, member1_id: @relationship.member1_id, member2_id: @relationship.member2_id, types: "sibling" } }
     end
 
     assert_redirected_to relationship_url(Relationship.last)

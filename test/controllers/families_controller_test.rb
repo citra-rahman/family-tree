@@ -17,7 +17,7 @@ class FamiliesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create family" do
     assert_difference("Family.count") do
-      post families_url, params: { family: { name: @family.name } }
+      post families_url, params: { family: { name: "Family 3" } }
     end
 
     assert_redirected_to family_url(Family.last)
