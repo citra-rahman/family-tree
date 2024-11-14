@@ -4,14 +4,15 @@
   On the planet of Lengaburu, the distant galaxy of Tara B. Our protagonists are King Arthur, Queen Margaret and their family. King Arthur is the emperor of Lengaburu and has been ruling the planet for the last 350 years (they have long lives in Lengaburu!). Let’s write some code to get to know the family.
 ### Solution
 #### Functional
-1. Add Family Members: Users can add family members with details such as name, birth date, gender, and other optional attributes.
-2. Define Relationships: Users can establish relationships (e.g., parent, child, spouse, sibling) between family members.
-3. View Family Tree: Display the family tree visually, allowing users to see relationships and family structure.
-4. Edit Member Details: Update information about each family member (e.g., edit birth dates, add death dates, or modify relationships).
-5. Search and Filter: Allow users to search for a specific family member by name and filter by attributes like age.
-6. Import/Export: Enable users to import family data from other sources (e.g., pdf files) and export the family tree as images or files.
+1. Add Families: Users can add families with attribute name.
+2. Add Family Members: Users can add family members with details such as name, birth date, gender, and other optional attributes.
+3. Define Relationships: Users can establish relationships (e.g., parent, child, spouse, sibling) between family members.
+4. View Family Tree: Display the family tree visually, allowing users to see relationships and family structure.
+5. Edit Member Details: Update information about each family member (e.g., edit birth dates, add death dates, or modify relationships).
+6. Search and Filter: Allow users to search for a specific family member by name and filter by attributes like age.
+7. Import/Export: Enable users to import family data from other sources (e.g., pdf files) and export the family tree as images or files.
 
-#### ER Diagram
+#### Class Diagram
 
 ```mermaid
 classDiagram
@@ -34,6 +35,7 @@ class Relationships{
 +member1_id: Members
 +member2_id: Members
 +types: string
++depth: integer
 +created_at: datetime
 +updated_at: datetime
 }

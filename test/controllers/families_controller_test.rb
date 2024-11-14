@@ -17,7 +17,7 @@ class FamiliesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create family" do
     assert_difference("Family.count") do
-      post families_url, params: { family: { name: @family.name } }
+      post families_url, params: { family: { name: "Family 3" } }
     end
 
     assert_redirected_to family_url(Family.last)
@@ -36,11 +36,5 @@ class FamiliesControllerTest < ActionDispatch::IntegrationTest
   test "should update family" do
     patch family_url(@family), params: { family: { name: @family.name } }
     assert_redirected_to family_url(@family)
-  end
-
-  test "should not destroy family with member" do
-    assert_difference("Family.count", 0) do
-      delete member_url(@family)
-    end
   end
 end

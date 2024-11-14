@@ -1,4 +1,5 @@
 class Member < ApplicationRecord
+  validates :name, uniqueness: true
   belongs_to :family
 
   enum :gender, male: "male", female: "female"
