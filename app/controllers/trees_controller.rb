@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TreeController < ApplicationController
+class TreesController < ApplicationController
   before_action :set_family_tree
 
   def set_family_tree
