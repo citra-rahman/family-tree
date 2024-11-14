@@ -1,0 +1,39 @@
+<p style="color: green"><%= notice %></p>
+
+<h1 class="text-center mt-5">The Family Tree</h1>
+
+<div id="family-tree" class="text-center"><div>
+
+<script>
+  var data = <%= @family_tree.to_json.html_safe %>
+  console.log(data)
+  dTree.init(data, {
+    target: "#family-tree",
+    debug: false,
+    height: 500,
+    width: 1200,
+    margin: {
+        top: 50,
+        right: 0,
+        bottom: 0,
+        left: 0
+    },
+    callbacks: {
+      textRenderer: function(name, extra, textClass) {
+        if (extra && extra.nickname)
+          name = name + " (" + extra.nickname + ")";
+        return "<p align='center' class='" + textClass + "'>" + name + "</p>";
+      },
+      nodeRenderer: function(name, x, y, height, width, extra, id, nodeClass, textClass, textRenderer) {
+        let node = '';
+        node += '<div ';
+        node += 'style="height:100%;width:100%;" ';
+        node += 'class="' + nodeClass + '" ';
+        node += 'id="node' + id + '">\n';
+        node += textRenderer(name, extra, textClass);
+        node += '</div>';
+        return node;
+      }
+    }
+  });
+</script>
