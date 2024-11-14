@@ -9,8 +9,7 @@
 3. Define Relationships: Users can establish relationships (e.g., parent, child, spouse, sibling) between family members.
 4. View Family Tree: Display the family tree visually, allowing users to see relationships and family structure.
 5. Edit Member Details: Update information about each family member (e.g., edit birth dates, add death dates, or modify relationships).
-6. Search and Filter: Allow users to search for a specific family member by name and filter by attributes like age.
-7. Import/Export: Enable users to import family data from other sources (e.g., pdf files) and export the family tree as images or files.
+6. Import: Enable users to import family data from txt file and Allow users to search for specific family member relationships.
 
 #### Class Diagram
 
@@ -62,9 +61,22 @@ Members "*" --> "*..*" Relationships
  - `DELETE /relationships/{id}`: Remove a relationship.
 4. Family Tree Visualization
  - `GET /trees/{id}`: Retrieve a full view of a family tree structure.
-5. Search and Filter:
-- `GET /members/search`: Search family members by name or other attributes.
-- `GET /members/filter`: Filter family members based on attributes like age or location.
-6. Import and Export
-- `POST /trees/import`: Import family data.
-- `GET /trees/{id}/export`: Export the family tree to a file format (PDF).
+5. Import
+- `POST /trees/import`: Import family data and search member relationships.
+
+#### Technology Stack
+- [Ruby On Rails](https://rubyonrails.org/): Full-stack development framework
+- [PostgreSQL](): Relational Database Management
+- [Bootstrap](https://getbootstrap.com/): CSS Framework
+- [DTree](https://github.com/ErikGartner/dTree): A D3 Graph to Visualize Family Hierarchy.
+
+#### Setup In Local
+1. install the latest version of ruby, rails, postgresql and nodejs.
+2. Run this command in terminal.
+```bash
+git clone https://github.com/citra-rahman/family-tree.git
+bundle install
+yarn install
+rails db:create db:migrate db:seed
+rails server
+```
