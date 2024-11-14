@@ -1,0 +1,2 @@
+ADD_CHILD Member2 Member5 Female
+GET_RELATIONSHIP Member2 Siblings
