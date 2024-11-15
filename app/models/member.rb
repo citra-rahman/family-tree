@@ -4,72 +4,52 @@ class Member < ApplicationRecord
 
   enum :gender, male: "male", female: "female"
 
-  has_many :relationships_as_member1, class_name: "Relationship", foreign_key: "member1_id"
-  has_many :relationships_as_member2, class_name: "Relationship", foreign_key: "member2_id"
+  has_many :relationships, class_name: "Relationship", foreign_key: "member1_id"
+  has_many :inverse_relationships, class_name: "Relationship", foreign_key: "member2_id"
 
   has_many :spouses, -> { where(relationships: { types: "spouse" }) },
-           through: :relationships_as_member1,
-           source: :member2
+           through: :relationships, source: :member2
 
   has_many :children, -> { where(relationships: { types: "child" }) },
-           through: :relationships_as_member2,
-           source: :member1
+           through: :inverse_relationships, source: :member1
 
-  has_many :parent_relationships, -> { where(types: "child") },
-           class_name: "Relationship", foreign_key: "member1_id"
+  has_many :parents, -> { where(relationships: { types: "child" }) },
+           through: :relationships, source: :member2
 
-  has_many :parents, through: :parent_relationships, source: :member2
+  has_many :siblings, -> { where(relationships: { types: "sibling" }) },
+           through: :relationships, source: :member2
 
-  scope :spouse_of, ->(member_id) {
+  scope :spouses_of, ->(member_id) {
     joins("INNER JOIN relationships ON members.id = relationships.member2_id OR members.id = relationships.member1_id")
       .where("relationships.types = ?", Relationship.types[:spouse])
       .where("relationships.member1_id = ? OR relationships.member2_id = ?", member_id, member_id)
-  }
-
-  scope :siblings_of, ->(member_id) {
-    joins(:parents).where("members.id != ?", member_id)
-  }
-
-  scope :cousins_of, ->(member_id) {
-    joins(parents: { siblings: :children })
       .where("members.id != ?", member_id)
   }
 
-  scope :brother_in_law_of, ->(member_id) {
-    joins("INNER JOIN relationships AS sibling_relationship ON members.id = sibling_relationship.member2_id")
-      .joins("INNER JOIN relationships AS spouse_relationship ON spouse_relationship.member1_id = sibling_relationship.member1_id")
-      .where("sibling_relationship.member1_id = ? AND sibling_relationship.types = ?", member_id, Relationship.types[:spouse])
-  }
+  def cousins
+    parent_ids = parents.pluck(:id)
+    uncle_aunt_ids = Relationship.where(member1_id: parent_ids, types: "sibling").pluck(:member2_id)
+    cousin_ids = Relationship.where(member1_id: uncle_aunt_ids, types: "child").pluck(:member2_id)
+    Member.where(id: cousin_ids)
+  end
 
-  scope :sister_in_law_of, ->(member_id) {
-    joins("INNER JOIN relationships AS sibling_relationship ON members.id = sibling_relationship.member2_id")
-      .joins("INNER JOIN relationships AS spouse_relationship ON spouse_relationship.member1_id = sibling_relationship.member1_id")
-      .where("sibling_relationship.member1_id = ? AND sibling_relationship.types = ?", member_id, Relationship.types[:spouse])
-  }
+  def sisters_in_law
+    spouse_sisters = spouses.joins(:siblings).where(gender: "female")
+    sibling_wives = siblings.joins(:spouses).where(gender: "female")
+    spouse_sisters.or(sibling_wives)
+  end
 
-  scope :maternal_aunt, ->(member_id) {
-    joins("INNER JOIN relationships AS mother_relationship ON members.id = mother_relationship.member1_id")
-      .joins("INNER JOIN relationships AS aunt_relationship ON aunt_relationship.member2_id = mother_relationship.member2_id")
-      .where("mother_relationship.types = ? AND aunt_relationship.types = ?", Relationship.types[:child], Relationship.types[:spouse])
-  }
+  def brothers_in_law
+    spouse_brothers = spouses.joins(:siblings).where(gender: "male")
+    sibling_husbands = siblings.joins(:spouses).where(gender: "male")
+    spouse_brothers.or(sibling_husbands)
+  end
 
-  scope :paternal_aunt_of, ->(member_id) {
-    joins("INNER JOIN relationships AS father_relationship ON members.id = father_relationship.member1_id")
-      .joins("INNER JOIN relationships AS aunt_relationship ON aunt_relationship.member2_id = father_relationship.member2_id")
-      .where("father_relationship.relationship_type = ? AND aunt_relationship.relationship_type = ?", "child", "spouse")
-  }
-
-  scope :grandparents_of, ->(member_id) {
-    joins("INNER JOIN relationships AS parent_relationship ON members.id = parent_relationship.member1_id")
-      .joins("INNER JOIN relationships AS grandparent_relationship ON grandparent_relationship.member2_id = parent_relationship.member2_id")
-      .where("grandparent_relationship.relationship_type = ?", Relationship.types[:child])
-  }
-
-  scope :nieces_and_nephews_of, ->(member_id) {
-    joins("INNER JOIN relationships AS sibling_relationship ON members.id = sibling_relationship.member2_id")
-      .joins("INNER JOIN relationships AS niece_nephew_relationship ON niece_nephew_relationship.member2_id = sibling_relationship.member1_id")
-      .where("sibling_relationship.relationship_type = ? AND niece_nephew_relationship.relationship_type = ?", "child", "spouse")
-  }
+  def grandparents
+    parent_ids = parents.pluck(:id)
+    grandparent_ids = Relationship.where(member2_id: parent_ids, types: "child").pluck(:member1_id)
+    Member.where(id: grandparent_ids)
+  end
 
   validate :death_time_validation
 

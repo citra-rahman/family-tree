@@ -32,7 +32,7 @@ class TreesController < ApplicationController
     when "male"
       member.spouses
     when "female"
-      Member.spouse_of(member.id).filter { |e| e[:id] != member.id }
+      Member.spouses_of(member.id)
     end
 
     return [] unless spouses.presence

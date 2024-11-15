@@ -31,11 +31,10 @@ class ImportController < ApplicationController
         if data[0] === "GET_RELATIONSHIP"
             member = Member.find_by(name: data[1])
             relationships = find_relationships(member, data[2]) if member.presence
-            relationships.each { |r| output << r.name }
+            relationships.each { |r| output << r.name } if relationships.presence
         end
-
-        render json: output, status: :ok and return
       end
+      render json: output, status: :ok and return
     rescue => e
       render json: { error: e.message }, status: :internal_server_error
     end
@@ -43,28 +42,20 @@ class ImportController < ApplicationController
 
   def find_relationships(member, type)
     case type
-    when "Parent"
+    when "Parents"
       member.parents
     when "Spouses"
       member.spouses
     when "Siblings"
-      Member.siblings_of(member.id)
+      member.siblings
     when "Cousins"
-      Member.cousins_of(member.id)
-    when "Sister_In_Law"
-      Member.sister_in_law_of(member.id)
-    when "Brother_In_Law"
-      Member.brother_in_law_of(member.id)
-    when "Paternal_Aunts"
-      Member.paternal_aunt_of(member.id)
-    when "Maternal_Aunts"
-      Member.maternal_aunt(member.id)
-    when "Nieces_Nephews"
-      Member.nieces_and_nephews_of(member.id)
+      member.cousins
+    when "Sisters_In_Law"
+      member.sisters_in_law
+    when "Brothers_In_Law"
+      member.brothers_in_law
     when "GrandParents"
-      Member.sister_in_law_of(member.id)
-    default
-      [ data: "Person Not Found" ]
+      member.grandparents
     end
   end
 

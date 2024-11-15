@@ -62,7 +62,7 @@ Members "*" --> "*..*" Relationships
 4. Family Tree Visualization
  - `GET /trees/{id}`: Retrieve a full view of a family tree structure.
 5. Import
-- `POST /trees/import`: Import family data and search member relationships.
+- `POST /import`: Import family data and search member relationships.
 
 #### Technology Stack
 - [Ruby On Rails](https://rubyonrails.org/): Full-stack development framework
