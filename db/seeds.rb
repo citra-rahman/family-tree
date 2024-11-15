@@ -1,6 +1,5 @@
 ActiveRecord::Base.transaction do
   arthur_family = Family.create!(name: "The King Arthur Family")
-  family_2 = Family.create!(name: "Family 2")
 
   members = [
     {
